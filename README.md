@@ -14,7 +14,7 @@ Abra `index.html` em um navegador moderno. Não é necessário instalar dependê
 - Feedback imediato, revisões espaçadas 1–3–7 e painel de evolução.
 - Simulado autoral de 20 questões nos pesos históricos 10/5/3/2 do concurso de 2019.
 
-A aula guiada tem 18 atividades: revisão ativa, teoria guiada, treinamento e consolidação. O progresso parcial pode ser retomado; respostas erradas ou dadas com dúvida/chute entram no caderno de revisão.
+A aula guiada tem 18 atividades: revisão ativa, teoria guiada, treinamento e consolidação. O treino e a consolidação priorizam assuntos errados ou incertos nas etapas anteriores. O progresso parcial pode ser retomado; respostas erradas ou dadas com dúvida/chute entram no caderno de revisão.
 
 A meta de 85% é pessoal. O simulado e os pesos históricos não representam um edital futuro. Consulte [LEIA-ME_app.md](LEIA-ME_app.md) para detalhes de uso, conteúdo e persistência.
 
