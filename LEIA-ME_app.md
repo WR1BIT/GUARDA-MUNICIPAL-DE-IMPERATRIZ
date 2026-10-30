@@ -9,6 +9,9 @@ Abra `index.html` em um navegador moderno. Não há instalação de dependência
 - O app mantém o horário diário das **20h às 21h** e a ordem semanal do guia e do calendário: CTB na segunda e quarta, Português na terça, Informática na quinta, Direito na sexta, Imperatriz no sábado e simulado/revisão no domingo.
 - A trilha tem 12 semanas e distribui os tópicos descritos no guia. Ela é uma organização sugerida; não altera o cronograma `.ics`.
 - A sessão completa usa o ciclo **10–20–20–10**. Uma missão de dois minutos com uma questão também conta como atividade.
+- A **Sala de Estudos** conduz uma aula individual em quatro etapas: revisão ativa (4 questões), teoria guiada (4), treinamento (8) e consolidação (2). A primeira aula disponível é Informática · Semana 1.
+- Na Sala, responda uma questão por vez e marque sua confiança (certeza, dúvida ou chute). O app mostra a justificativa e explica cada uma das cinco alternativas; ao concluir, apresenta acertos por etapa, diagnóstico por assunto e prioridades para o caderno de erros.
+- Respostas erradas ou corretas com dúvida/chute são agendadas para D+1. Ao acertar a revisão, ela avança para D+3 e depois D+7; errar novamente traz a retomada para D+1. Fechar a aula no meio não apaga o andamento.
 - A ofensiva é flexível: o painel conta dias praticados, pausas não removem XP e não zeram progresso.
 - Questões erradas entram na fila de revisão em 1, 3 e 7 dias. Questões certas podem ser marcadas para revisão quando houve dúvida ou chute.
 - Cada tentativa recebe feedback imediato. O painel acompanha XP, níveis, conquistas, acertos por matéria e simulados; a meta de 85% é pessoal, não uma nota de corte.
