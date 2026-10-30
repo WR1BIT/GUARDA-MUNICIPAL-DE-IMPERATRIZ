@@ -178,6 +178,7 @@ Deno.serve(async (req: Request) => {
   const history = cleanHistory(body.history);
   const stageIndex = Number.isInteger(body.stageIndex) ? Math.max(0, Math.min(3, body.stageIndex)) : 0;
   const stats = cleanStats(body.stats);
+  let effectiveStats = stats;
   let assessment = "none";
   let gradeContext = "";
 
@@ -188,6 +189,8 @@ Deno.serve(async (req: Request) => {
     if (!q || !Array.isArray(q.options) || q.options.length !== 5 || !Number.isInteger(q.correctIndex) || q.correctIndex < 0 || q.correctIndex > 4 || !Number.isInteger(selectedIndex) || selectedIndex < 0 || selectedIndex > 4 || !["certeza", "duvida", "chute"].includes(confidence)) return json({ error: "Não consegui conferir a resposta. Reabra a questão e tente novamente." }, 400);
     assessment = selectedIndex !== q.correctIndex ? "incorrect" : confidence === "certeza" ? "correct" : "partial";
     const qText = cleanString(q.prompt, 900);
+    const concept = cleanString(q.concept, 100) || topic;
+    effectiveStats = cleanStats({ responses: [...stats.responses, { concept, assessment, stageIndex, confidence }] });
     const options = q.options.map((o: any, i: number) => `${String.fromCharCode(65 + i)}: ${cleanString(o?.text, 500)} — ${cleanString(o?.explanation, 800)}`).join("\n");
     gradeContext = `\n\nDados da questão já aplicada (use apenas para corrigir, não para alterar o gabarito):\nEnunciado: ${qText}\nAlternativas e justificativas: \n${options}\nGabarito calculado: ${String.fromCharCode(65 + q.correctIndex)}\nResposta escolhida: ${String.fromCharCode(65 + selectedIndex)}; confiança: ${confidence}. Resultado: ${assessment}.\nProgresso após esta resposta: ${stats.correct + (assessment === "correct" ? 1 : 0)} acerto(s) seguros, ${stats.partial + (assessment === "partial" ? 1 : 0)} acerto(s) com dúvida/chute, ${stats.incorrect + (assessment === "incorrect" ? 1 : 0)} erro(s), de ${stats.total + 1}.`;
   }
@@ -195,7 +198,7 @@ Deno.serve(async (req: Request) => {
   const stageSizes = [4, 4, 8, 2];
   const stageAnswered = stats.responses.filter((r: any) => r.stageIndex === stageIndex).length;
   const generateNext = mode === "quiz_start" || mode === "quiz_continue" || (mode === "quiz_answer" && body.generateNext === true && stageAnswered < stageSizes[stageIndex] - 1 && stats.total < 17);
-  const learnerTurn = `Pedido atual: ${prompt}${gradeContext}\n\nEtapa atual: ${stageTitles[stageIndex]}. Histórico de desempenho validado: ${stats.correct} correta(s), ${stats.partial} parcial(is), ${stats.incorrect} errada(s), ${stats.total} respondida(s). Gere questão de continuação: ${generateNext ? "sim" : "não"}.`;
+  const learnerTurn = `Pedido atual: ${prompt}${gradeContext}\n\nEtapa atual: ${stageTitles[stageIndex]}. Histórico de desempenho validado: ${effectiveStats.correct} correta(s), ${effectiveStats.partial} parcial(is), ${effectiveStats.incorrect} errada(s), ${effectiveStats.total} respondida(s). Gere questão de continuação: ${generateNext ? "sim" : "não"}.`;
 
   const apiKey = Deno.env.get("OPENAI_API_KEY");
   if (!apiKey) return json({ error: "A tutora está instalada, mas falta configurar OPENAI_API_KEY nos segredos das Edge Functions do Supabase." }, 503);
@@ -207,7 +210,7 @@ Deno.serve(async (req: Request) => {
       headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         model,
-        instructions: instructionsFor(subject, topic, mode, stageIndex, stats, assessment) + gradeContext,
+        instructions: instructionsFor(subject, topic, mode, stageIndex, effectiveStats, assessment) + gradeContext,
         input: [...history, { role: "user", content: learnerTurn }],
         text: { format: { type: "json_schema", name: "study_tutor_turn", strict: true, schema: outputSchema } },
         max_output_tokens: mode === "lesson" ? 3600 : 2200,
