@@ -11,6 +11,7 @@ Abra `index.html` em um navegador moderno. Não há instalação de dependência
 - A sessão completa usa o ciclo **10–20–20–10**. Uma missão de dois minutos com uma questão também conta como atividade.
 - A **Sala de Estudos** conduz uma aula individual em quatro etapas: revisão ativa (4 questões), teoria guiada (4), treinamento (8) e consolidação (2). A primeira aula disponível é Informática · Semana 1.
 - Na Sala, responda uma questão por vez e marque sua confiança (certeza, dúvida ou chute). O app mostra a justificativa e explica cada uma das cinco alternativas; ao concluir, apresenta acertos por etapa, diagnóstico por assunto e prioridades para o caderno de erros.
+- O treino e a consolidação adaptam a ordem das questões aos erros e às respostas inseguras das etapas anteriores, retomando temas relacionados primeiro.
 - Respostas erradas ou corretas com dúvida/chute são agendadas para D+1. Ao acertar a revisão, ela avança para D+3 e depois D+7; errar novamente traz a retomada para D+1. Fechar a aula no meio não apaga o andamento.
 - A ofensiva é flexível: o painel conta dias praticados, pausas não removem XP e não zeram progresso.
 - Questões erradas entram na fila de revisão em 1, 3 e 7 dias. Questões certas podem ser marcadas para revisão quando houve dúvida ou chute.
