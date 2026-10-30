@@ -17,6 +17,29 @@ Abra `index.html` em um navegador moderno. Não há instalação de dependência
 - Questões erradas entram na fila de revisão em 1, 3 e 7 dias. Questões certas podem ser marcadas para revisão quando houve dúvida ou chute.
 - Cada tentativa recebe feedback imediato. O painel acompanha XP, níveis, conquistas, acertos por matéria e simulados; a meta de 85% é pessoal, não uma nota de corte.
 
+## Tutora IA e teoria completa
+
+Na aba **Tutora**, selecione uma das quatro matérias e um módulo do edital. **Aula completa** pede explicação gradual, objetivos, conceitos, exemplos resolvidos, diferenças entre temas próximos, exceções, pegadinhas, estratégia para a prova, resumo e glossário. Também é possível fazer perguntas de acompanhamento, simplificar, pedir exemplos e gerar resumos.
+
+O botão **Me teste** conduz uma avaliação adaptativa de 18 questões, uma por vez: revisão ativa (4), teoria guiada (4), treinamento (8) e consolidação/caderno de erros (2). Antes de confirmar a alternativa, marque certeza, dúvida ou chute. A tutora explica todas as cinco opções, atualiza os acertos, mantém dúvidas/chutes separados e prioriza os temas mais difíceis nas etapas seguintes. As questões de IA também concedem XP; pausas não reduzem pontos.
+
+### Ativar a Tutora
+
+O HTML não contém nem recebe uma chave de IA. A chamada passa pela Edge Function `study-tutor` no Supabase, configurada para exigir um token de usuário Supabase válido.
+
+1. Publique no projeto Supabase conectado os arquivos `supabase/functions/study-tutor/index.ts` e `deno.json` deste repositório, com verificação JWT ligada.
+2. No painel do Supabase, adicione o segredo `OPENAI_API_KEY` em **Edge Functions → Secrets**. Nunca coloque essa chave no HTML, no GitHub ou no chat.
+3. Opcional: defina `OPENAI_MODEL`. Sem essa variável, a função usa `gpt-6-luna`.
+4. Abra **Nuvem**, entre com sua conta Supabase e volte à aba **Tutora**.
+
+O projeto Supabase conectado pode receber a função diretamente pelo fluxo de publicação do projeto. Se o segredo ainda não estiver definido, a tela mostrará a configuração que falta. O provedor de IA é a API da OpenAI; a cobrança de API é separada do plano ChatGPT e depende do volume de uso e do modelo. Consulte os [preços da API](https://openai.com/api/pricing/) antes de habilitar a chave.
+
+As mensagens e diagnósticos da Tutora ficam no armazenamento local deste navegador, separados por usuário. Eles **não** entram no envio manual da tabela de progresso do Supabase e não migram automaticamente para outro aparelho. As mensagens são transmitidas à API da OpenAI para gerar respostas; não envie senhas ou informações pessoais sensíveis. A função envia solicitações com `store:false`.
+
+O conteúdo da tutora parte dos módulos do Edital 002/2019 e do guia do projeto, mas não faz busca automática no texto integral de leis ou em notícias atuais. Para leis, resoluções, dados municipais e regras que possam ter mudado, confira a fonte oficial indicada na explicação. O edital e os pesos são históricos.
+
+O plano adaptativo da tutora revisita erros durante as etapas e recomenda retomadas em 1, 3 e 7 dias. A fila automática da aba **Revisões** segue vinculada às questões tradicionais do app.
+
 ## Pesos históricos e questões
 
 O simulado incluído tem 20 questões, na proporção do Edital 002/2019: **10 específicas, 5 de Português, 3 de Informática e 2 de História/Geografia de Imperatriz**. São questões autorais para treino, com cinco alternativas e comentários.
